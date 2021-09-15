@@ -5,38 +5,45 @@ import Board from './components/Board';
 import { calculateWinner } from './helper/winnerLogic';
 
 const App = () => {
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [isXnext, setIsXnext] = useState(false);
+  const [history, setHistory] = useState([
+    { board: Array(9).fill(null), isXNext: true },
+  ]);
 
-  const winner = calculateWinner(board);
+  const [currentMove, setCurrentMove] = useState(0);
+  const current = history[currentMove];
+
+  const winner = calculateWinner(current.board);
   const message = winner
     ? `Winner is ${winner}`
-    : `${isXnext ? 'X' : 'O'}'s turn`;
-  console.log(winner);
+    : `${current.isXNext ? 'X' : 'O'}'s turn`;
 
   const handleSquareClick = position => {
     // Once clicked or winner=true do not change
-    if (board[position] || winner) return;
+    if (current.board[position] || winner) return;
 
     // when click set array[position] with X or O
-    setBoard(prev => {
-      return prev.map((square, pos) => {
+    setHistory(prev => {
+      const lastHistory = prev[prev.length - 1];
+
+      const newBoard = lastHistory.board.map((square, pos) => {
         if (pos === position) {
-          return isXnext ? 'X' : 'O';
+          return lastHistory.isXNext ? 'X' : 'O';
         }
         return square;
       });
+
+      // concating history and alternating X and O
+      return prev.concat({ board: newBoard, isXNext: !lastHistory.isXNext });
     });
 
-    // Alternating X and O
-    setIsXnext(prev => !prev);
+    setCurrentMove(prev => prev + 1);
   };
 
   return (
     <div className="app">
       <h1>TIC TAC TOE</h1>
       <h2>{message}</h2>
-      <Board board={board} handleSquareClick={handleSquareClick} />
+      <Board board={current.board} handleSquareClick={handleSquareClick} />
     </div>
   );
 };
