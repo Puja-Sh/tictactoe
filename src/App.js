@@ -13,9 +13,9 @@ const App = () => {
   const [currentMove, setCurrentMove] = useState(0);
   const current = history[currentMove];
 
+  // calculateWinner return object thats why destructuring
   const { winner, winnerSquares } = calculateWinner(current.board);
 
-  console.log(winnerSquares);
   const handleSquareClick = position => {
     // Once clicked or winner=true do not change
     if (current.board[position] || winner) return;
@@ -38,13 +38,17 @@ const App = () => {
     setCurrentMove(prev => prev + 1);
   };
 
+  // Move to partiular step
   const moveTo = move => {
     setCurrentMove(move);
   };
+
+  // Reseting the game
   const resetGame = () => {
     setHistory(NEW_GAME);
     setCurrentMove(0);
   };
+
   return (
     <div className="app">
       <h1>TIC TAC TOE</h1>
@@ -54,7 +58,11 @@ const App = () => {
         handleSquareClick={handleSquareClick}
         winnerSquares={winnerSquares}
       />
-      <button type="button" onClick={resetGame}>
+      <button
+        type="button"
+        onClick={resetGame}
+        className={`btn-reset ${winner ? 'active' : ''}`}
+      >
         Start new game
       </button>
       <History history={history} moveTo={moveTo} currentMove={currentMove} />
