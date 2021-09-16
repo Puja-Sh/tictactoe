@@ -14,10 +14,17 @@ export function calculateWinner(squares) {
   for (let i = 0; i < winLines.length; i++) {
     const [a, b, c] = winLines[i];
     if (squares[a] && squares[b] == squares[a] && squares[a] == squares[c]) {
-      return squares[a]; // return winer X or O
+      //   return squares[a]; // return winer X or O and winnerSquare for styling
+      return {
+        winner: squares[a],
+        winnerSquares: [a, b, c],
+      };
     }
   }
 
-  // until no winter return null
-  return null;
+  // until no winter return null and empty array
+  return {
+    winner: null,
+    winnerSquares: [],
+  };
 }

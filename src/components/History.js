@@ -5,10 +5,9 @@ function History({ history, moveTo, currentMove }) {
     <ul>
       {history.map((_, move) => {
         return (
-          <li>
+          <li key={move}>
             <button
               type="button"
-              key={move}
               onClick={() => {
                 moveTo(move);
               }}

@@ -6,16 +6,16 @@ import { calculateWinner } from './helper/winnerLogic';
 import History from './components/History';
 import StatusMessage from './components/StatusMessage';
 
+const NEW_GAME = [{ board: Array(9).fill(null), isXNext: true }];
 const App = () => {
-  const [history, setHistory] = useState([
-    { board: Array(9).fill(null), isXNext: true },
-  ]);
+  const [history, setHistory] = useState(NEW_GAME);
 
   const [currentMove, setCurrentMove] = useState(0);
   const current = history[currentMove];
 
-  const winner = calculateWinner(current.board);
+  const { winner, winnerSquares } = calculateWinner(current.board);
 
+  console.log(winnerSquares);
   const handleSquareClick = position => {
     // Once clicked or winner=true do not change
     if (current.board[position] || winner) return;
@@ -41,12 +41,22 @@ const App = () => {
   const moveTo = move => {
     setCurrentMove(move);
   };
+  const resetGame = () => {
+    setHistory(NEW_GAME);
+    setCurrentMove(0);
+  };
   return (
     <div className="app">
       <h1>TIC TAC TOE</h1>
       <StatusMessage winner={winner} current={current} />
-      <Board board={current.board} handleSquareClick={handleSquareClick} />
-
+      <Board
+        board={current.board}
+        handleSquareClick={handleSquareClick}
+        winnerSquares={winnerSquares}
+      />
+      <button type="button" onClick={resetGame}>
+        Start new game
+      </button>
       <History history={history} moveTo={moveTo} currentMove={currentMove} />
     </div>
   );
