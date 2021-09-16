@@ -1,9 +1,10 @@
+# Stack
+- Reactjs
+- SASS
+
 # For redeployment on Surge
 
-- surge <FOLDER_TO_UPLOAD> <DOMAIN>
-
-// for example
-surge dist tictactoe-react-sharma.surge.sh
+- `surge <FOLDER_TO_UPLOAD> <DOMAIN>` - for example "surge dist tictactoe-react-sharma.surge.sh"
 
 # Nano React App Default Javascript Template
 
