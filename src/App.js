@@ -65,6 +65,7 @@ const App = () => {
       >
         Start new game
       </button>
+      <p>History</p>
       <History history={history} moveTo={moveTo} currentMove={currentMove} />
     </div>
   );

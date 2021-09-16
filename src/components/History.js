@@ -14,7 +14,7 @@ function History({ history, moveTo, currentMove }) {
                 }}
                 className={`btn-move ${move === currentMove ? 'active' : ''}`}
               >
-                {move === 0 ? `Start the game` : `Go to step #${move}`}
+                {move === 0 ? `` : `Go to step #${move}`}
               </button>
             </li>
           );
