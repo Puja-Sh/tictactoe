@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import './styles/root.scss';
 import Board from './components/Board';
 import { calculateWinner } from './helper/winnerLogic';
+import History from './components/History';
+import StatusMessage from './components/StatusMessage';
 
 const App = () => {
   const [history, setHistory] = useState([
@@ -13,9 +15,6 @@ const App = () => {
   const current = history[currentMove];
 
   const winner = calculateWinner(current.board);
-  const message = winner
-    ? `Winner is ${winner}`
-    : `${current.isXNext ? 'X' : 'O'}'s turn`;
 
   const handleSquareClick = position => {
     // Once clicked or winner=true do not change
@@ -39,11 +38,16 @@ const App = () => {
     setCurrentMove(prev => prev + 1);
   };
 
+  const moveTo = move => {
+    setCurrentMove(move);
+  };
   return (
     <div className="app">
       <h1>TIC TAC TOE</h1>
-      <h2>{message}</h2>
+      <StatusMessage winner={winner} current={current} />
       <Board board={current.board} handleSquareClick={handleSquareClick} />
+
+      <History history={history} moveTo={moveTo} currentMove={currentMove} />
     </div>
   );
 };
